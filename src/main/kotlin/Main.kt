@@ -106,6 +106,7 @@ fun main() {
     println(Service.getUnreadChatsCount(3))
     Service.getChats(3)
     Service.tagChatLikeARead(Pair(1, 3))
+    Service.tagChatLikeARead(Pair(2, 3))
     Service.tagChatLikeARead(Pair(0, 3))
     println(Service.getUnreadChatsCount(3))
     Service.getChats(3).forEach { print("_${it.key}_") }
