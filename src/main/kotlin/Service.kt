@@ -115,15 +115,21 @@ object Service {
 
     fun getMessageList(senderID: Int, receiverID: Int): List<PrivateMessage> {
 
-        val senderAsSender = storage[Pair(senderID, receiverID)]
-        val senderAsRecipient = storage[Pair(receiverID, senderID)]
-        val merge = mutableListOf<PrivateMessage>()
-        if (senderAsSender != null && senderAsRecipient != null) {
-            merge.addAll(senderAsSender)
-            merge.addAll(senderAsRecipient)
-            merge.sortBy { it.date }
-        }
-        return merge
+
+        return storage
+            .filter { it.key == Pair(senderID, receiverID) || it.key == Pair(receiverID, senderID) }
+            .flatMap { it.value }
+            .sortedBy { it.date }
+
+//        val senderAsSender = storage[Pair(senderID, receiverID)]
+//        val senderAsRecipient = storage[Pair(receiverID, senderID)]
+//        val merge = mutableListOf<PrivateMessage>()
+//        if (senderAsSender != null && senderAsRecipient != null) {
+//            merge.addAll(senderAsSender)
+//            merge.addAll(senderAsRecipient)
+//            merge.sortBy { it.date }
+//        }
+//        return merge
     }
 //возвращает чат в привычном виде -- последовательный по дате список сообщений между 2-мя пользователями
 }
